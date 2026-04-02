@@ -1,0 +1,44 @@
+1. Tabla torneos:
+P_key = N_torneo (varchar)
+Juego(varchar)
+fecha_inicio(date)
+fecha_fin(date)
+premio(int)
+t_tamaño(int)
+
+2.Tabla equipos:
+P_ey n_equipo (varchar)
+fecha_CREACION(date)
+F_key C_tag (varchar) (de jugadores.G_tag)
+
+3. Tabla jugadores:
+P_key =G_tag (varchar)
+Nombre (vachar)
+Pais (varchar)
+Nacimiento (date)
+email (varchar)
+F_key = n_equipo (varchar) (de equipos.n_equipo)
+
+4. Tabla inscripciones:
+P_keys, F_keys = n_toneo (varchar)(de torneos.n_torneo) n_equipo (varchar)(de equipos.n_equipos)
+
+5.Tabla partidas
+P_key =  id_partida (int)
+Fecha(date)
+puntaje_a(int)
+puntaje_b(int)
+fase (vrchar)
+
+F_keys = n_torneo (varchar) (de torneos.n_torneo), equipo_A (varchar), equipo_B (varchar) (ambos de equipos.n_equipo)
+
+6. Tabla stats:
+p_keys y f_keys = id_partida (int)(de partidas.id_partidas), n_jugador()(varchar)(de jugadores.nj_ugador)
+K.Os(int)
+resets(int)
+asistencias(int)
+
+7. Tabla sponsors
+p_key = n_sponsor (varchar)
+industria (varchar)
+
+

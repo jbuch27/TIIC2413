@@ -1,0 +1,61 @@
+Entidades:
+
+- Torneos(nombre str(30) PRIMARY KEY,
+	  videojuego str(30),
+	  fecha_inicio date PRIMARY KEY,
+	  fecha_termino date,
+	  pozo float,
+	  maximo_equipos int)
+
+- Jugadores(gamertag str(30) PRIMARY KEY,
+	    nombre str(30),
+	    email str(30),
+	    fecha_nacimiento date,
+	    pais_origen str(30))
+
+- Equipos(nombre char(30) PRIMARY KEY,
+	  fecha_creacion date,
+	  capitán str(30))
+
+- Sponsors(nombre char(30) PRIMARY KEY, 
+	   industria char(30), 
+	   monto int)
+
+
+Relaciones:
+- Es_del_equipo(gamertag char(30) PRIMARY KEY,
+		nombre_equipo char(30) PRIMARY_KEY)
+
+- Esta_en_torneo(nombre_equipo char(30) PRIMARY KEY,
+		 nombre_torneo char(30) PRIMARY KEY,
+		 fecha_inicio date PRIMARY KEY)
+
+- Partida(nombre_equipo1 char(30) PRIMARY KEY,
+	  nombre_equipo2 char(30) PRIMARY KEY,
+	  inicio timestamp,
+	  puntaje_equipo1 int,
+	  puntaje_equipo2 int,
+	  fase char(30))
+
+- Estadisticas_en_partida(gamertag char(30) PRIMARY KEY,
+			  equipo_contrincante char(30) PRIMARY KEY,
+			  KOs int,
+			  restarts int,
+			  assists int)
+ 
+- Sponsor_del_torneo(nombre_sponsor char(30) PRIMARY KEY,
+		     nombre_torneo char(30) PRIMARY KEY,
+		     fecha_torneo date PRIMARY KEY)
+
+
+UN JUGADOR PERTENECE A UN UNICO EQUIPO Y NO SE PUEDE CAMBIAR (FOREIGN KEY gamertag y nombre del equipo)
+
+CAPITAN ES MIEMBRO DEL EQUIPO
+
+JUGADOR.CAPITAN SERA EL GAMERTAG DEL JUGADOR
+
+TORNEOS TIENEN MAXIMO DE EQUIPOS (8)
+
+CADA EQUIPO PUEDE ESTAR EN MULTIPLES TORNEOS Y UN TORNEO PUEDE ESTAR 
+
+PARRILLAS DE 8 EQUIPOS DIVIDIDOS EN 2 GRUPOS DE 4 ROUND ROBIN, LOS GANADORES AVANZAN A SEMIS, LOS GANADORES DE SEMIS PASAN A FINAL Y DE AHI SE OBTIENE EL GANADOR

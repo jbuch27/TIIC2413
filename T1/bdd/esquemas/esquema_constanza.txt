@@ -1,0 +1,59 @@
+Torneo(_nombre_: str, 
+    título_videojuego: str, 
+    fecha_inicio: date, 
+    fecha_fin: date,
+    prize_pool: int,
+    max_equipos: int)
+
+Jugador(_gamertag_: str,
+    nombre_real: str,
+    email: str, 
+    fecha_nacimiento: date; 
+    país_origen: str)
+
+Equipo(_nombre_: str, 
+    fecha_creacion: date,
+    capitan: str) #-> (gamertag)
+
+Partida(_id_partida_: int, #-> ¿MAYBE lo podemos agregar?
+    equipo_A: str,
+    equipo_B: str,
+    fecha: date,
+    hora_programada: date,
+    puntaje_equipoA: int,
+    puntaje_equipoB: int,
+    fase: str
+    )
+
+Sponsor(
+    _nombre_: str,
+    industria: str,
+    monto: int
+)
+
+---
+Estadísticas_individuales(
+    _id_partida_: int,
+    _gamertag_jugador: str,
+    KOs: int,
+    restarts: int,
+    assists: int
+)
+
+Auspicia(
+    nombre_sponsor: str,
+    nombre_torneo
+)
+
+Pertenece_a(
+    gamertag: str,
+    nombre_equipo: str,
+)
+
+Inscrito_en(
+    nombre_equipo: str,
+    nombre_torneo: str,
+)
+
+
+#nota: un jugador pertenece sólo a 1 equipo
