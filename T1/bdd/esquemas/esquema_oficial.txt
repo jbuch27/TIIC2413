@@ -1,0 +1,79 @@
+Entidades
+Torneos(
+nombre str(30) PK,
+fecha_inicio date PK,
+videojuego str(30),
+fecha_termino date,
+pozo decimal(10,2),
+max_equipos int
+)
+
+Equipos(
+nombre_equipo char(30) PK,
+fecha_creacion date,
+capitan str(30) FK -- Refiere a Jugadores(gamertag)
+)
+
+Jugadores(
+gamertag str(30) PK,
+nombre str(30),
+email str(30) UNIQUE,
+fecha_nacimiento date,
+pais_origen str(30)
+)
+(Nota: Hemos removido la Clave Foránea de equipo aquí, tal como solicitaste).
+
+Sponsors(
+nombre_sponsor char(30) PK,
+industria char(30)
+)
+
+Relaciones
+Es_del_equipo (
+gamertag char(30) PK / FK, -- Al ser la única PK (o usar un constraint UNIQUE), forzamos que el jugador solo esté en 1 equipo
+nombre_equipo char(30) FK
+)
+
+Esta_en_torneo (
+nombre_equipo char(30) PK / FK,
+nombre_torneo char(30) PK / FK,
+fecha_inicio_torneo date PK / FK
+)
+
+Partida(
+ID_partida int PK,
+nombre_torneo char(30) FK,
+fecha_inicio_torneo date FK,
+nombre_equipo1 char(30) FK,
+nombre_equipo2 char(30) FK,
+inicio timestamp,
+puntaje_equipo1 int,
+puntaje_equipo2 int,
+fase char(30)
+)
+
+Estadisticas_en_partida(
+gamertag char(30) PK / FK,
+ID_partida int PK / FK,
+KOs int,
+restarts int,
+assists int
+)
+
+Sponsor_del_torneo(
+nombre_sponsor char(30) PK / FK,
+nombre_torneo char(30) PK / FK,
+fecha_inicio_torneo date PK / FK,
+monto int -- Mantenemos el monto en la relación, ya que depende del torneo específico
+)
+UN JUGADOR PERTENECE A UN UNICO EQUIPO Y NO SE PUEDE CAMBIAR (FOREIGN KEY gamertag y nombre del equipo)
+
+CAPITAN ES MIEMBRO DEL EQUIPO Y UN SOLO CAPITAN POR EQUIPO
+
+JUGADOR.CAPITAN SERA EL GAMERTAG DEL JUGADOR
+
+TORNEOS TIENEN MAXIMO DE EQUIPOS (8)
+
+CADA EQUIPO PUEDE ESTAR EN MULTIPLES TORNEOS Y UN TORNEO TIENE UN NOMBRE UNICO
+
+PARRILLAS DE 8 EQUIPOS DIVIDIDOS EN 2 GRUPOS DE 4 ROUND ROBIN, LOS GANADORES AVANZAN A SEMIS, LOS GANADORES DE SEMIS PASAN A FINAL Y DE AHI SE OBTIENE EL GANADOR
