@@ -1,79 +1,82 @@
-CREATE TABLE Torneo(
-nombre varchar(30) PRIMARY KEY,
-fecha_inicio date PRIMARY KEY, -- por torneos periodicos
-videojuego varchar(30),
-fecha_termino date,
-pozo decimal(10,2),
-max_equipos smallint
-)
+CREATE TABLE TORNEO (
+	NOMBRE VARCHAR(30),
+	FECHA_INICIO DATE, -- por torneos periodicos
+	VIDEOJUEGO VARCHAR(30),
+	FECHA_TERMINO DATE,
+	POZO DECIMAL,
+	MAX_EQUIPOS SMALLINT,
+	PRIMARY KEY (NOMBRE, FECHA_INICIO)
+);
 
-CREATE TABLE Equipo(
-nombre varchar(30) PRIMARY KEY,
-fecha_creacion date,
-capitan varchar(30), -- Ref a Jugador(gamertag)
-FOREIGN KEY(capitan) REFERENCES Jugador(gamertag) -- el capitan sera un jugador
-)
+CREATE TABLE JUGADOR (
+	GAMERTAG VARCHAR(30) PRIMARY KEY,
+	NOMBRE VARCHAR(30),
+	EMAIL VARCHAR(30) UNIQUE, -- el correo es unico aunque un mismo jugador puede tener varios
+	FECHA_NACIMIENTO DATE,
+	PAIS_ORIGEN VARCHAR(30)
+);
 
-CREATE TABLE Jugador(
-gamertag varchar(30) PRIMARY KEY,
-nombre varchar(30),
-email varchar(30) UNIQUE, -- el correo es unico aunque un mismo jugador puede tener varios
-fecha_nacimiento date,
-pais_origen varchar(30)
-)
+CREATE TABLE EQUIPO (
+	NOMBRE VARCHAR(30) PRIMARY KEY,
+	FECHA_CREACION DATE,
+	CAPITAN VARCHAR(30), -- Ref a Jugador(gamertag)
+	FOREIGN KEY (CAPITAN) REFERENCES JUGADOR (GAMERTAG) -- el capitan sera un jugador
+);
 
-CREATE TABLE Sponsor(
-nombre varchar(30) PRIMARY KEY,
-industria varchar(30)
-)
+CREATE TABLE SPONSOR (
+	NOMBRE VARCHAR(30) PRIMARY KEY,
+	INDUSTRIA VARCHAR(30)
+);
 
 ------------------------------------------------------ Relaciones ----------------------------------------------------------
+CREATE TABLE ES_DEL_EQUIPO (
+	GAMERTAG VARCHAR(30) PRIMARY KEY, -- Ref Jugador(gamertag)
+	NOMBRE_EQUIPO VARCHAR(30), -- Ref Equipo(nombre)
+	FOREIGN KEY (GAMERTAG) REFERENCES JUGADOR (GAMERTAG),
+	FOREIGN KEY (NOMBRE_EQUIPO) REFERENCES EQUIPO (NOMBRE)
+);
 
-CREATE TABLE Es_del_equipo(
-gamertag varchar(30) PRIMARY KEY, -- Ref Jugador(gamertag)
-nombre_equipo varchar(30), -- Ref Equipo(nombre)
-FOREIGN KEY (gamertag) REFERENCES Jugador(gamertag),
-FOREIGN KEY (nombre_equipo) REFERENCES Equipo(nombre)
-)
+CREATE TABLE ESTA_EN_TORNEO (
+	NOMBRE_EQUIPO VARCHAR(30),
+	NOMBRE_TORNEO VARCHAR(30),
+	FECHA_INICIO_TORNEO DATE,
+	PRIMARY KEY (NOMBRE_EQUIPO, NOMBRE_TORNEO, FECHA_INICIO_TORNEO),
+	FOREIGN KEY (NOMBRE_EQUIPO) REFERENCES EQUIPO (NOMBRE),
+	FOREIGN KEY (NOMBRE_TORNEO, FECHA_INICIO_TORNEO) REFERENCES TORNEO (NOMBRE, FECHA_INICIO)
+);
 
-CREATE TABLE Esta_en_torneo(
-nombre_equipo varchar(30) PRIMARY KEY,
-nombre_torneo varchar(30) PRIMARY KEY,
-fecha_inicio_torneo date PRIMARY KEY,
-FOREIGN KEY (nombre_equipo) REFERENCES Equipo(nombre),
-FOREIGN KEY (nombre_torneo, fecha_inicio_torneo) REFERENCES Torneo(nombre, fecha_inicio)
-)
+CREATE TABLE PARTIDA (
+	"id" INT PRIMARY KEY,
+	NOMBRE_TORNEO VARCHAR(30),
+	FECHA_INICIO_TORNEO DATE,
+	NOMBRE_EQUIPO1 VARCHAR(30),
+	NOMBRE_EQUIPO2 VARCHAR(30),
+	INICIO TIMESTAMP,
+	PUNTAJE_EQUIPO1 SMALLINT,
+	PUNTAJE_EQUIPO2 SMALLINT,
+	FASE VARCHAR(30),
+	FOREIGN KEY (NOMBRE_TORNEO, FECHA_INICIO_TORNEO) REFERENCES TORNEO (NOMBRE, FECHA_INICIO),
+	FOREIGN KEY (NOMBRE_EQUIPO1) REFERENCES EQUIPO (NOMBRE),
+	FOREIGN KEY (NOMBRE_EQUIPO2) REFERENCES EQUIPO (NOMBRE) --RESTRINGIR QUE NO SEA EL MISMO TEAM VS EL MISMO TEAM
+);
 
-CREATE TABLE Partida(
-"id" int PRIMARY KEY,
-nombre_torneo varchar(30),
-fecha_inicio_torneo date,
-nombre_equipo1 varchar(30),
-nombre_equipo2 varchar(30),
-inicio timestamp,
-puntaje_equipo1 smallint,
-puntaje_equipo2 smallint,
-fase varchar(30),
-FOREIGN KEY (nombre_torneo, fecha_inicio_torneo) REFERENCES Torneo(nombre, fecha_inicio),
-FOREIGN KEY (nombre_equipo1) REFERENCES Equipo(nombre),
-FOREIGN KEY (nombre_equipo2) REFERENCES Equipo(nombre) --RESTRINGIR QUE NO SEA EL MISMO TEAM VS EL MISMO TEAM
-)
+CREATE TABLE ESTADISTICAS_EN_PARTIDA (
+	GAMERTAG VARCHAR(30),
+	ID_PARTIDA INT,
+	KOS SMALLINT,
+	RESTARTS SMALLINT,
+	ASSISTS SMALLINT,
+	PRIMARY KEY (GAMERTAG, ID_PARTIDA),
+	FOREIGN KEY (GAMERTAG) REFERENCES JUGADOR (GAMERTAG),
+	FOREIGN KEY (ID_PARTIDA) REFERENCES PARTIDA ("id")
+);
 
-CREATE TABLE Estadisticas_en_partida(
-gamertag varchar(30) PRIMARY KEY,
-id_partida int PRIMARY KEY,
-KOs smallint,
-restarts smallint,
-assists smallint,
-FOREIGN KEY (gamertag) REFERENCES Jugador(gamertag),
-FOREIGN KEY (id_partida) REFERENCES Partida("id")
-)
-
-CREATE TABLE Sponsor_del_torneo(
-nombre_sponsor varchar(30) PRIMARY KEY,
-nombre_torneo varchar(30) PRIMARY KEY,
-fecha_inicio_torneo date PRIMARY KEY,
-monto int, -- Mantenemos el monto en la relación, ya que depende del torneo específico
-FOREIGN KEY (nombre_sponsor) REFERENCES Sponsor(nombre),
-FOREIGN KEY (nombre_torneo, fecha_inicio_torneo) REFERENCES Torneo(nombre, fecha_inicio)
-)
+CREATE TABLE SPONSOR_DEL_TORNEO (
+	NOMBRE_SPONSOR VARCHAR(30),
+	NOMBRE_TORNEO VARCHAR(30),
+	FECHA_INICIO_TORNEO DATE,
+	MONTO INT, -- Mantenemos el monto en la relación, ya que depende del torneo específico
+	PRIMARY KEY (NOMBRE_SPONSOR, NOMBRE_TORNEO, FECHA_INICIO_TORNEO),
+	FOREIGN KEY (NOMBRE_SPONSOR) REFERENCES SPONSOR (NOMBRE),
+	FOREIGN KEY (NOMBRE_TORNEO, FECHA_INICIO_TORNEO) REFERENCES TORNEO (NOMBRE, FECHA_INICIO)
+);
