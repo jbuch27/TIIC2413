@@ -54,8 +54,7 @@ inicio timestamp,
 puntaje_equipo1 smallint,
 puntaje_equipo2 smallint,
 fase varchar(30),
-FOREIGN KEY (nombre_torneo) REFERENCES Torneo(nombre),
-FOREIGN KEY (fecha_inicio_torneo) REFERENCES Torneo(fecha_inicio),
+FOREIGN KEY (nombre_torneo, fecha_inicio_torneo) REFERENCES Torneo(nombre, fecha_inicio),
 FOREIGN KEY (nombre_equipo1) REFERENCES Equipo(nombre),
 FOREIGN KEY (nombre_equipo2) REFERENCES Equipo(nombre) --RESTRINGIR QUE NO SEA EL MISMO TEAM VS EL MISMO TEAM
 )
