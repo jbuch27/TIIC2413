@@ -8,8 +8,12 @@
         {% for torneo in lista_datos %}
             <div class="tarjeta-torneo">
                 <span>{{ torneo['nombre'] }}</span>
-                
+                <a href="{{ url_for('torneo', id_torneo=torneo['nombre']) }}" class="btn-detalle">
+
+                    <button type="button">Ver informacion basica</button>
+                </a>
                 <a href="{{ url_for('stats', id_torneo=torneo['nombre']) }}" class="btn-detalle">
+
                     <button type="button">Ver detalles</button>
                 </a>
             </div>

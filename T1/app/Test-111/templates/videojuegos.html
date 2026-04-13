@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <body>
     <h1>{{ title }} Estos son los juegos que han realizado torneos con nosotros</h1>
 
@@ -8,7 +9,7 @@
             <div class="tarjeta-torneo">
                 <span>{{juego['videojuego']}}</span>
                 
-                <a href="{{ url_for('sponsors', id_juego=juego['videojuego']) }}" class="btn-detalle">
+                <a href="{{ url_for('sponsor', id_juego=juego['videojuego']) }}" class="btn-detalle">
                     <button type="button">Sponsors</button>
                 </a>
             </div>

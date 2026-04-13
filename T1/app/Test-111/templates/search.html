@@ -12,10 +12,35 @@
     <h1>{{ title }} Bienvenido!</h1>
     <p> estas ahora en el buscador de jugadores</p>
     <form action= "/search">
-        <input type="text" name ="player"
-        id = "player" placeholder= "Enter a player or team" />
+        <input type="text" name ="data"
+        id = "data" placeholder= "Enter a player or team" />
         <button type="submit">submit</button>   
     </form>
     <a href="{{ url_for('index') }}" class="btn-inicio">Inicio</a>
+</body>
+<body>
+        {%if lista_datos == "DATA NOT FOUND"%}
+            <p>No se encontro nada para tu busqueda por favor intentelo denuevo<p>
+        {%elif lista_datos[0].gamertag is defined%}
+                <h2>Datos encontrados</h2>
+                {% for jugador in lista_datos %}
+                    <p>Alias: {{ jugador.gamertag }} || Nombre real:{{ jugador.nombre }}</p>
+                    <p> Pais: {{jugador.pais_origen}}</p>
+                    <p>Fecha de nacimiento: {{jugador.fecha_nacimiento}}</p>
+                    <p> Informacion de contacto {{jugador.email}}</p>
+                {% endfor %}
+
+        {% else %}
+            <h2>Datos encontrados</h2>
+            <p>{{lista_datos[0].nombre}} - Capitán {{lista_datos[0].capitan}}</p>
+            <p>Torneos en los que participo o participa:</p>
+            {% for equipo in lista_datos %}
+                <ul>
+                    <li>{{ equipo.nombre_torneo }} - comienza en: {{ equipo.fecha_inicio_torneo}}</li>
+                </ul>
+            
+                
+            {% endfor %}
+        {% endif %}
 </body>
 </html>
