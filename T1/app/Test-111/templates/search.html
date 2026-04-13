@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset ="UTF-8">
+    <meta name= "viewport" content="with = device-width,
+     initial-scale =1.0">
+     <title>{{ title }} Busqueda</title>
+     <link href= "{{url_for('static', filename='styles/style.css')}}"
+      rel="stylesheet"/>
+</head>
+<body>
+    <h1>{{ title }} Bienvenido!</h1>
+    <p> estas ahora en el buscador de jugadores</p>
+    <form action= "/search">
+        <input type="text" name ="player"
+        id = "player" placeholder= "Enter a player or team" />
+        <button type="submit">submit</button>   
+    </form>
+    <a href="{{ url_for('index') }}" class="btn-inicio">Inicio</a>
+</body>
+</html>

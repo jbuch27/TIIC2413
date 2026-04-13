@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }} Inscripción</title>
+</head>
+<body>
+    <h1>{{ title }} Formulario de Inscripción</h1>
+    <p>Ingrese los datos del equipo, el torneo al que se quiere inscribir y sus jugadores.</p>
+    
+    <form action="/inscripcion" method="POST">
+        
+        <h3>1. Torneo a Inscribir</h3>
+        <label for="tournament">Nombre del Torneo:</label>
+        <input type="text" name="tournament" id="tournament" placeholder="Ej: Copa piston" required/>
+        
+        <h3>2. Datos del Equipo</h3>
+        <label for="team_name">Nombre del Equipo:</label>
+        <input type="text" name="team_name" id="team_name" placeholder="Ej: team rocket" required/>
+        
+        <label for="team_date">Fecha de Creación:</label>
+        <input type="date" name="team_date" id="team_date" required/>
+
+        <h3>3. Datos del Capitán</h3>
+        <p>El capitán quedará registrado como el líder y miembro del equipo.</p>
+        <label>Gamertag:</label> <input type="text" name="cap_gamertag" required/>
+        <label>Nombre Real:</label> <input type="text" name="cap_nombre" required/>
+        <label>Email:</label> <input type="email" name="cap_email" required/>
+        <label>Fecha Nac.:</label> <input type="date" name="cap_nacimiento" required/>
+        <label>País:</label> <input type="text" name="cap_pais" required />
+
+        <h3>4. Datos de Jugador 2</h3>
+        <label>Gamertag:</label> <input type="text" name="p2_gamertag">
+        <label>Nombre Real:</label> <input type="text" name="p2_nombre">
+        <label>Email:</label> <input type="email" name="p2_email"/>
+        <label>Fecha Nac.:</label> <input type="date" name="p2_nacimiento">
+        <label>País:</label> <input type="text" name="p2_pais">
+
+    
+        <button type="submit">Enviar Inscripción</button>   
+    </form>
+    
+   
+    <a href="{{ url_for('index') }}" class="btn-inicio">Inicio</a>
+</body>
+</html>

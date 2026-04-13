@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <a href="/index"><button>Inicio</button></a>
+
+    <h1>Datos de la tabla Test</h1>
+    
+    <ul>
+        {% for fila in info %}
+            <li>
+                {{ fila['columna1'] }} : {{ fila['columna2'] }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset ="UTF-8">
+    <meta name= "viewport" content="with = device-width,
+     initial-scale =1.0">
+     <title>{{ title }} Welcome, este es el inicio </title>
+     <link href= "{{url_for('static', filename='styles/style.css')}}"
+      rel="stylesheet"/>
+</head>
+<body>
+    <h1>{{ title }} Bienvenido!</h1>
+    <p> Base de datos E-sports las/lan</p>
+    <form action= "/search">
+        <input type="text" name ="player"
+        id = "search" placeholder= "Enter a player or team" />
+        <button type="submit">submit</button>   
+    </form>
+</body>
+<form action="/Tournaments">
+    <button type="submit">Ver Torneos</button>
+</form>
+<form action='/inscripcion'>
+    <button type="submit">Inscribete!</button>
+</form>
+<form action='/videojuegos'>
+    <button type="submit">Nuestros juegos</button>
+</form>
+</html>
