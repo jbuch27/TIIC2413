@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles del Torneo</title>
+</head>
+<body>
+    <a href="{{ url_for('index') }}">Volver al Inicio</a>
+    <h1>Detalles del Torneo</h1>
+    <hr>
+
+    <h2>Tabla de Posiciones (Fase de Grupos)</h2>
+    {% if posiciones %}
+        <table border="1" cellspacing="0" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>Fase</th>
+                    <th>Pos</th>
+                    <th>Equipo</th>
+                    <th>PJ</th>
+                    <th>G</th>
+                    <th>E</th>
+                    <th>P</th>
+                    <th>Pts</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for pos in posiciones %}
+                <tr>
+                    <td>{{ pos.fase }}</td>
+                    <td align="center">{{ pos.ranking }}</td>
+                    <td>{{ pos.equipo }}</td>
+                    <td align="center">{{ pos.partidas_jugadas }}</td>
+                    <td align="center">{{ pos.ganadas }}</td>
+                    <td align="center">{{ pos.empatadas }}</td>
+                    <td align="center">{{ pos.perdidas }}</td>
+                    <td align="center"><strong>{{ pos.puntaje_total }}</strong></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aún no hay resultados para generar la tabla de posiciones.</p>
+    {% endif %}
+    <hr>
+    <h2>Partidas Programadas</h2>
+    {% if partidas %}
+        <ul>
+        {% for p in partidas %}
+            <li>
+                Partida #{{ p.id }}: {{ p.nombre_equipo1 }} {{p.puntaje_equipo1}} vs {{ p.nombre_equipo2 }} {{p.puntaje_equipo2}} <br>
+                Inicio: {{ p.inicio }}
+            </li>
+            <br><br>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay partidas programadas.</p>
+    {% endif %}
+
+    <hr>
+
+    <h2>Equipos Participantes</h2>
+    {% if inscritos %}
+        <ul>
+        {% for equipo in inscritos %}
+            <li>
+                {{ equipo.equipos_inscritos }} (Capitán: {{ equipo.capitan }}) - Creado: {{ equipo.fecha_creacion }}
+            </li>
+            <br><br>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay equipos inscritos.</p>
+    {% endif %}
+
+    <hr>
+
+    <h2>Sponsors Oficiales</h2>
+    {% if sponsors %}
+        <ul>
+        {% for sponsor in sponsors %}
+            <li>
+                {{ sponsor.nombre_sponsor }} ({{ sponsor.industria }}) - Aporte: ${{ sponsor.monto_aportado }}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay sponsors para este torneo.</p>
+    {% endif %}
+
+</body>
+</html>

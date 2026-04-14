@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset ="UTF-8">
+    <meta name= "viewport" content="with = device-width,
+     initial-scale =1.0">
+     <title>{{ title }} Busqueda</title>
+     <link href= "{{url_for('static', filename='styles/style.css')}}"
+      rel="stylesheet"/>
+</head>
+<body>
+    <h1>{{ title }} ¡Bienvenido!</h1>
+    <p> ahora estás en el buscador de jugadores</p>
+    <form action= "/search">
+        <input type="text" name ="data"
+        id = "data" placeholder= "Enter a player or team" />
+        <button type="submit">submit</button>   
+    </form>
+    <a href="{{ url_for('index') }}" class="btn-inicio">Inicio</a>
+</body>
+<body>
+        {%if lista_datos == "DATA NOT FOUND"%}
+            <p>No se encontró nada para tu búsqueda por favor inténtelo de nuevo<p>
+        {%elif lista_datos[0].gamertag is defined%}
+                <h2>Datos encontrados</h2>
+                {% for jugador in lista_datos %}
+                    <p>Alias: {{ jugador.gamertag }} || Nombre real:{{ jugador.nombre }}</p>
+                    <p> País: {{jugador.pais_origen}}</p>
+                    <p>Fecha de nacimiento: {{jugador.fecha_nacimiento}}</p>
+                    <p> Información de contacto {{jugador.email}}</p>
+                {% endfor %}
+
+        {% else %}
+            <h2>Datos encontrados</h2>
+            <p>{{lista_datos[0].nombre}} - Capitán {{lista_datos[0].capitan}}</p>
+            <p>Torneos en los que participo o participa:</p>
+            {% for equipo in lista_datos %}
+                <ul>
+                    <li>{{ equipo.nombre_torneo }}</li>
+                </ul>
+            
+                
+            {% endfor %}
+        {% endif %}
+</body>
+</html>
