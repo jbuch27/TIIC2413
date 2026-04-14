@@ -1,16 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Estadísticas del Torneo</title>
+</head>
 <body>
-    <a href="/index"><button>Inicio</button></a>
+    <a href="{{ url_for('torneos') }}">Volver a lista de torneos</a>
+    <h1>Estadísticas para: {{ torneo }}</h1>
+    <hr>
 
-    <h1>Datos de la tabla Test</h1>
-    
-    <ul>
-        {% for fila in info %}
-            <li>
-                {{ fila['columna1'] }} : {{ fila['columna2'] }}
-            </li>
+    <h3>Selecciona un equipo para ver su evolución:</h3>
+    <div>
+        {% for e in equipos %}
+            <a href="{{ url_for('stats', id_torneo=torneo, equipo=e.nombre_equipo) }}">
+                <button type="button">{{ e.nombre_equipo }}</button>
+            </a>
         {% endfor %}
-    </ul>
+    </div>
+
+    <hr>
+
+    {% if equipo_seleccionado %}
+        <h2>Evolución de: {{ equipo_seleccionado }}</h2>
+        {% if jugadores %}
+            <table border="1" cellspacing="0" cellpadding="5">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Gamertag</th>
+                        <th colspan="2">KOs</th>
+                        <th colspan="2">Restarts</th>
+                        <th colspan="2">Assists</th>
+                    </tr>
+                    <tr>
+                        <th>Grupo</th>
+                        <th>Elimin.</th>
+                        <th>Grupo</th>
+                        <th>Elimin.</th>
+                        <th>Grupo</th>
+                        <th>Elimin.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for j in jugadores %}
+                    <tr>
+                        <td><strong>{{ j.gamertag }}</strong></td>
+                        <td align="center">{{ j.kos_grupo or 'N/A' }}</td>
+                        <td align="center">{{ j.kos_eliminatorias or 'N/A' }}</td>
+                        <td align="center">{{ j.restarts_grupo or 'N/A' }}</td>
+                        <td align="center">{{ j.restarts_eliminatorias or 'N/A' }}</td>
+                        <td align="center">{{ j.assists_grupo or 'N/A' }}</td>
+                        <td align="center">{{ j.assists_eliminatorias or 'N/A' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No hay datos estadísticos para este equipo.</p>
+        {% endif %}
+    {% else %}
+        <p>Por favor, selecciona un equipo arriba para ver el detalle de su desempeño por fase.</p>
+    {% endif %}
+<hr>
+    
+    <h2>Ranking Global de Jugadores (KOs / Restarts)</h2>
+    
+    {% if ranking %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Puesto</th>
+                    <th>Gamertag</th>
+                    <th>Equipo</th>
+                    <th>KOs</th>
+                    <th>Restarts</th>
+                    <th>Assists</th>
+                    <th>Ratio</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for r in ranking %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ r.gamertag }}</td>
+                    <td>{{ r.nombre_equipo }}</td>
+                    <td>{{ r.total_kos }}</td>
+                    <td>{{ r.total_restarts }}</td>
+                    <td>{{ r.total_assists }}</td>
+                    <td>{{ r.ratio }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay suficientes datos registrados.</p>
+    {% endif %}
 </body>
+
 </html>

@@ -8,6 +8,41 @@
     <a href="{{ url_for('index') }}">Volver al Inicio</a>
     <h1>Detalles del Torneo</h1>
     <hr>
+
+    <h2>Tabla de Posiciones (Fase de Grupos)</h2>
+    {% if posiciones %}
+        <table border="1" cellspacing="0" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>Fase</th>
+                    <th>Pos</th>
+                    <th>Equipo</th>
+                    <th>PJ</th>
+                    <th>G</th>
+                    <th>E</th>
+                    <th>P</th>
+                    <th>Pts</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for pos in posiciones %}
+                <tr>
+                    <td>{{ pos.fase }}</td>
+                    <td align="center">{{ pos.ranking }}</td>
+                    <td>{{ pos.equipo }}</td>
+                    <td align="center">{{ pos.partidas_jugadas }}</td>
+                    <td align="center">{{ pos.ganadas }}</td>
+                    <td align="center">{{ pos.empatadas }}</td>
+                    <td align="center">{{ pos.perdidas }}</td>
+                    <td align="center"><strong>{{ pos.puntaje_total }}</strong></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aún no hay resultados para generar la tabla de posiciones.</p>
+    {% endif %}
+    <hr>
     <h2>Partidas Programadas</h2>
     {% if partidas %}
         <ul>
