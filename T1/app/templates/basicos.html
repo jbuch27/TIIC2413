@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles del Torneo</title>
+</head>
+<body>
+    <a href="{{ url_for('index') }}">Volver al Inicio</a>
+    <h1>Detalles del Torneo</h1>
+    <hr>
+    <h2>Partidas Programadas</h2>
+    {% if partidas %}
+        <ul>
+        {% for p in partidas %}
+            <li>
+                Partida #{{ p.id }}: {{ p.nombre_equipo1 }} {{p.puntaje_equipo1}} vs {{ p.nombre_equipo2 }} {{p.puntaje_equipo2}} <br>
+                Inicio: {{ p.inicio }}
+            </li>
+            <br><br>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay partidas programadas.</p>
+    {% endif %}
+
+    <hr>
+
+    <h2>Equipos Participantes</h2>
+    {% if inscritos %}
+        <ul>
+        {% for equipo in inscritos %}
+            <li>
+                {{ equipo.equipos_inscritos }} (Capitán: {{ equipo.capitan }}) - Creado: {{ equipo.fecha_creacion }}
+            </li>
+            <br><br>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay equipos inscritos.</p>
+    {% endif %}
+
+    <hr>
+
+    <h2>Sponsors Oficiales</h2>
+    {% if sponsors %}
+        <ul>
+        {% for sponsor in sponsors %}
+            <li>
+                {{ sponsor.nombre_sponsor }} ({{ sponsor.industria }}) - Aporte: ${{ sponsor.monto_aportado }}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay sponsors para este torneo.</p>
+    {% endif %}
+
+</body>
+</html>
