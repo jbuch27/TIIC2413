@@ -12,7 +12,7 @@
 Después de descomprimir el archivo, sigue estos pasos:
 
 ### 1. Preparar la Base de Datos (obligatorio)
-Asegúrate de haber creado y poblado la base de datos `tarea1` en PostgreSQL:
+Asegúrate de haber creado y poblado la base de datos `tarea1` en PostgreSQL y ejecutar schema.sql y data.sql
 
 ```bash
 createdb -U postgres tarea1
