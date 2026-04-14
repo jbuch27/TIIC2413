@@ -34,6 +34,6 @@ Entrar a http://127.0.0.1:8000 (hacer Ctr + Click o  entrando directamente desde
 ## Variables de entorno necesarias
 - DB_HOST: localhost
 - DB_PORT: 5432
-- DB_USER postgres
-- DB_PASSWORD postgres
-- DB_NAME tarea1
+- DB_USER: postgres
+- DB_PASSWORD: postgres
+- DB_NAME: tarea1
