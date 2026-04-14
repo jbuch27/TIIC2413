@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, render_template, request
+import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
@@ -8,10 +9,11 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 def get_db_connection():
     try:
         conn = psycopg2.connect(
-            host="localhost",
-            database="tarea1",
-            user="postgres",
-            password="Fd078bk3!?",
+            host=os.getenv("DB_HOST", "localhost"),
+            port=os.getenv("DB_PORT", "5432"),
+            database=os.getenv("DB_NAME", "tarea1"),
+            user=os.getenv("DB_USER", "postgres"),
+            password=os.getenv("DB_PASSWORD", "postgres"),
             cursor_factory=RealDictCursor
         )
         return conn
